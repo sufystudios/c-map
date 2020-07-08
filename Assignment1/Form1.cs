@@ -32,7 +32,8 @@ namespace Assignment1
         private int zoom=9;
         private double lat = -32.0258301;
         private double lng = 115.9149175;
-        private string key = "AIzaSyCY4LFVRilOWUScUH6DK5SORNMOxzJD0Fg";
+        private string key = 
+        "";
         string defaultzoom;
        // private List<Label> labels;
        // private List<GMapMarker> markers;
