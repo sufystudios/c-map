@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assignment1
+﻿namespace Assignment1
 {
     class PositionSystem
     {
@@ -35,7 +29,7 @@ namespace Assignment1
         }
         public static PositionSystem Instance()
         {
-            if(instance==null)
+            if (instance == null)
             {
                 instance = new PositionSystem();
             }

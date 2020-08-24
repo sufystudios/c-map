@@ -1,9 +1,6 @@
 ﻿using GMap.NET.WindowsForms;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assignment1
 {
@@ -16,7 +13,7 @@ namespace Assignment1
         public int[] destinations { get; set; }
         public string type { get; set; }
         public IEnumerable<Connection> conns;
-        public Event(int id,double lat, double lon, string message,string type)
+        public Event(int id, double lat, double lon, string message, string type)
         {
             this.id = id;
             this.lat = lat;
@@ -41,9 +38,9 @@ namespace Assignment1
             this.filename = filename;
         }
     }
-    class Video: Photo
+    class Video : Photo
     {
-        public Video (int id,double lat, double lon, string filename,string type):base(id,lat,lon,filename,type)
+        public Video(int id, double lat, double lon, string filename, string type) : base(id, lat, lon, filename, type)
         {
 
         }
@@ -51,7 +48,7 @@ namespace Assignment1
     class Photo : Event
     {
         public string filename;
-        public Photo(int id, double lat, double lon, string filename,string type) : base(id,lat,lon,"",type)
+        public Photo(int id, double lat, double lon, string filename, string type) : base(id, lat, lon, "", type)
         {
             this.filename = filename;
         }

@@ -51,8 +51,9 @@ namespace Assignment1
             // 
             this.location.Location = new System.Drawing.Point(112, 8);
             this.location.Name = "location";
-            this.location.Size = new System.Drawing.Size(224, 20);
+            this.location.Size = new System.Drawing.Size(224, 26);
             this.location.TabIndex = 0;
+            this.location.TextChanged += new System.EventHandler(this.location_TextChanged);
             // 
             // panel1
             // 
@@ -73,7 +74,7 @@ namespace Assignment1
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(349, 11);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 13);
+            this.label2.Size = new System.Drawing.Size(54, 20);
             this.label2.TabIndex = 4;
             this.label2.Text = "Zoom:";
             // 
@@ -81,7 +82,7 @@ namespace Assignment1
             // 
             this.zooml.Location = new System.Drawing.Point(392, 8);
             this.zooml.Name = "zooml";
-            this.zooml.Size = new System.Drawing.Size(47, 20);
+            this.zooml.Size = new System.Drawing.Size(47, 26);
             this.zooml.TabIndex = 3;
             this.zooml.Text = "10";
             // 
@@ -100,7 +101,7 @@ namespace Assignment1
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(62, 11);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 13);
+            this.label1.Size = new System.Drawing.Size(64, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "Search:";
             this.label1.Click += new System.EventHandler(this.label1_Click);

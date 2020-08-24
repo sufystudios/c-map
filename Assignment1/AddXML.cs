@@ -1,12 +1,10 @@
 ﻿using GMap.NET;
 using GMap.NET.WindowsForms;
-using Google.Maps;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Assignment1
@@ -15,8 +13,8 @@ namespace Assignment1
     {
         public static void MakeNewXML()
         {
-      
-       
+
+
             XNamespace soapenv = "http://www.w3.org/2001/12/soap-envelope";
             // SOAPENV:encodingStyle=\"http://www.w3.org/2001/12/soap-encoding";
             XNamespace soapenvenc = "http://www.w3.org/2001/12/soap-encoding";//  SOAP-ENV:encodingStyle=\"http://www.w3.org/2001/12/soap-encoding";
@@ -38,7 +36,7 @@ namespace Assignment1
 
             xDoc.Save("events.xml");
         }
-        public static int AddToFile(string eventtype,string message,PointLatLng ll,string filepath)
+        public static int AddToFile(string eventtype, string message, PointLatLng ll, string filepath)
         {
             try
             {
@@ -102,12 +100,13 @@ namespace Assignment1
                 // Console.WriteLine(file);
                 //Console.WriteLine(sw);
                 return id;
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return -1;
             }
         }
-       
+
         private static XNamespace GetGpxNameSpace()
         {
             XNamespace gpx = XNamespace.Get("http://www.topografix.com/GPX/1/1");
@@ -117,9 +116,9 @@ namespace Assignment1
         {
             Console.WriteLine(data);
             List<double[]> waypoints = new List<double[]>();
-            string[] split=data.Split('\n');
-            
-            for(int i=0;i<split.Length-1;i++)
+            string[] split = data.Split('\n');
+
+            for (int i = 0; i < split.Length - 1; i++)
             {
                 Console.WriteLine(split[i].Split(' ')[0].ToString());
                 double[] d = new double[2];
@@ -146,7 +145,7 @@ namespace Assignment1
                          select new Tracklog(
                               Int32.Parse(r.Element(lle + "eventid").Value),
                              x.Element(lle + "data").Value,
-                             
+
                              x.Element(lle + "filepath").Value,
                             x.Name.LocalName.ToString()
                              );
@@ -196,9 +195,9 @@ namespace Assignment1
             }
             return sb.ToString();
         }
-    
 
-public static string LoadGPXWaypoints(string sFile)
+
+        public static string LoadGPXWaypoints(string sFile)
         {
             try
             {
@@ -227,16 +226,17 @@ public static string LoadGPXWaypoints(string sFile)
                       wpt.Name, wpt.Latitude, wpt.Longitude,
                       wpt.Elevation, wpt.Dt));
                 }
-               
+
                 //sb.Append(LoadGPXTracks(sFile));
                 Console.WriteLine(sb);
                 return sb.ToString();
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw;
             }
         }
-        private static XDocument GetGpxDoc(string sFile) 
+        private static XDocument GetGpxDoc(string sFile)
         {
             try
             {
@@ -244,11 +244,12 @@ public static string LoadGPXWaypoints(string sFile)
 
                 gpxDoc = XDocument.Load(sFile);
                 return gpxDoc;
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 throw;
             }
-            
+
         }
         public static IEnumerable<Event> getXMLEvents()
         {
@@ -261,18 +262,18 @@ public static string LoadGPXWaypoints(string sFile)
             XDocument document = XDocument.Load("events.xml");
             var events = from r in document.Descendants(lle + "Event")
                          from x in r.Elements().First().ElementsAfterSelf()
-                         where x.Name.LocalName!="photo" && x.Name.LocalName!="video" && isTextEvent(x.Name.LocalName)
+                         where x.Name.LocalName != "photo" && x.Name.LocalName != "video" && isTextEvent(x.Name.LocalName)
 
-                        select new Event(
-                             Int32.Parse(r.Element(lle + "eventid").Value),
-                            double.Parse(x.Element(lle+"location").Element(lle + "lat").Value), 
-                            double.Parse(x.Element(lle + "location").Element(lle + "lon").Value),
-                            x.Element(lle + "text").Value,
-                           x.Name.LocalName.ToString()
-                            );
-                           
-                         
-       return events;
+                         select new Event(
+                              Int32.Parse(r.Element(lle + "eventid").Value),
+                             double.Parse(x.Element(lle + "location").Element(lle + "lat").Value),
+                             double.Parse(x.Element(lle + "location").Element(lle + "lon").Value),
+                             x.Element(lle + "text").Value,
+                            x.Name.LocalName.ToString()
+                             );
+
+
+            return events;
             ;
         }
         public static IEnumerable<Video> getXMLVideos()
@@ -310,7 +311,7 @@ public static string LoadGPXWaypoints(string sFile)
             XDocument document = XDocument.Load("events.xml");
             var events = from r in document.Descendants(lle + "Event")
                          from x in r.Elements().First().ElementsAfterSelf()
-                         where x.Name.LocalName=="photo"
+                         where x.Name.LocalName == "photo"
                          select new Photo(
                               Int32.Parse(r.Element(lle + "eventid").Value),
                              double.Parse(x.Element(lle + "location").Element(lle + "lat").Value),
@@ -334,14 +335,14 @@ public static string LoadGPXWaypoints(string sFile)
 
             XDocument document = XDocument.Load("events.xml");
             var connections = from r in document.Descendants(lle + "Event")
-                              from x in r.Descendants(lle+"connection")
-                              where x!=null && r.Element(lle+"eventid").Value.Equals(id.ToString())
-                                 select new Connection(
-                              Int32.Parse(x.Element(lle + "from").Value ),
-                              Int32.Parse(x.Element(lle+"to").Value)
-                            ) ;
+                              from x in r.Descendants(lle + "connection")
+                              where x != null && r.Element(lle + "eventid").Value.Equals(id.ToString())
+                              select new Connection(
+                           Int32.Parse(x.Element(lle + "from").Value),
+                           Int32.Parse(x.Element(lle + "to").Value)
+                         );
 
-           
+
             return connections;
             ;
         }
@@ -355,7 +356,7 @@ public static string LoadGPXWaypoints(string sFile)
 
             //XDocument xmlDoc = XDocument.Load("d:/data.xml");
             var elementsToDelete = from ele in file.Elements(soapenv + "Envelope").Elements(soapenv + "Body").Elements(lle + "Event")
-                                   where ele != null && ele.Element(lle + "eventid").Value.Equals(id.ToString()) 
+                                   where ele != null && ele.Element(lle + "eventid").Value.Equals(id.ToString())
                                    select ele;
             Console.WriteLine(id);
             foreach (var e in elementsToDelete)
@@ -375,7 +376,7 @@ public static string LoadGPXWaypoints(string sFile)
 
             //XDocument xmlDoc = XDocument.Load("d:/data.xml");
             var elementsToDelete = from ele in file.Elements(soapenv + "Envelope").Elements(soapenv + "Body").Elements(lle + "Event")
-                                   where ele != null && ele.Element(lle +"lat").Value.Equals(lat.ToString()) && ele.Element(lle+ "lon").Value.Equals(lon.ToString())
+                                   where ele != null && ele.Element(lle + "lat").Value.Equals(lat.ToString()) && ele.Element(lle + "lon").Value.Equals(lon.ToString())
                                    select ele;
 
             foreach (var e in elementsToDelete)
@@ -386,7 +387,7 @@ public static string LoadGPXWaypoints(string sFile)
             file.Save("events.xml");
 
         }
-        public static void addConnection(int start , int to)
+        public static void addConnection(int start, int to)
         {
             XNamespace soapenv = "http://www.w3.org/2001/12/soap-envelope";
             // SOAPENV:encodingStyle=\"http://www.w3.org/2001/12/soap-encoding";
@@ -394,8 +395,8 @@ public static string LoadGPXWaypoints(string sFile)
             XNamespace lle = "http://www.xyz.org/lifelogevents";
             XDocument file = XDocument.Load("events.xml");
             XElement conn = new XElement(lle + "connection",
-                
-              new XElement(lle + "from", start), new XElement(lle + "to",to));
+
+              new XElement(lle + "from", start), new XElement(lle + "to", to));
 
             var elementsToUpdate = from ele in file.Elements(soapenv + "Envelope").Elements(soapenv + "Body").Elements(lle + "Event")
                                    where ele != null && ele.Element(lle + "eventid").Value.Equals(start.ToString())
@@ -410,7 +411,7 @@ public static string LoadGPXWaypoints(string sFile)
             // file.Element(soapenv + "Envelope").Element(soapenv + "Body").Add(ev);
             file.Save("events.xml");
         }
-        public static void updateEvent(GMapMarker mark,string text)
+        public static void updateEvent(GMapMarker mark, string text)
         {
 
             XNamespace soapenv = "http://www.w3.org/2001/12/soap-envelope";
@@ -441,12 +442,13 @@ public static string LoadGPXWaypoints(string sFile)
                     mark.ToolTipText = id + ":" + elementsToUpdate.Elements().First().ElementsAfterSelf().First().Name.LocalName + ": " + text;
 
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
 
             }
         }
-        public static void addToTracklog(double lat, double lon,int id)
+        public static void addToTracklog(double lat, double lon, int id)
         {
 
         }
